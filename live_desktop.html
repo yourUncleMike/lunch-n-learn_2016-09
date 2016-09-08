@@ -5,6 +5,10 @@
   h1 { font-size: 2.5em; text-align: center; }
   li { font-size: 2.5em; }
   img { display: block; margin: auto; }
+  a:link    { color: lightgrey; text-decoration: none; }
+  a:visited { color: lightgrey; text-decoration: none; }
+  a:hover   { color: cyan;      text-decoration: none; }
+  a:active  { color: cyan;      text-decoration: underline; }
  </style>
  <script>
   var desktop_img_list = [ "desktop", "networks", "blueteeth", "volume", "brightness" ];
@@ -23,7 +27,12 @@
  </script>
 </head>
 <body onLoad="show_image(0);">
- <h1>Verify network, bluetooth, audio and video drivers</h1>
+ <h1>Verify 
+  <a href="javascript:show_image(1);">network</a>, 
+  <a href="javascript:show_image(2);">bluetooth</a>, 
+  <a href="javascript:show_image(3);">audio</a>, and 
+  <a href="javascript:show_image(4);">video drivers</a>
+ </h1>
  <a href="javascript:next_image();"><img id="desktop_img" src="images/404.png"></a>
  </ul>
 </body>
