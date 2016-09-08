@@ -1,0 +1,30 @@
+<html>
+<head>
+ <style>
+  body { background-color:darkblue; color: lightgrey; }
+  h1 { font-size: 2.5em; text-align: center; }
+  li { font-size: 2.5em; }
+  img { display: block; margin: auto; }
+ </style>
+ <script>
+  var desktop_img_list = [ "desktop", "networks", "blueteeth", "volume", "brightness" ];
+  var img_no = 0;
+  function show_image(n) {
+   img = document.getElementById("desktop_img");
+   img_name = desktop_img_list[n];
+   img.src = "images/LIVE_" + img_name + ".png";
+   img_no = n;
+  };
+  function next_image() {
+   img_no += 1;
+   if (! desktop_img_list[img_no]) { img_no = 0; };
+   show_image(img_no);
+  };
+ </script>
+</head>
+<body onLoad="show_image(0);">
+ <h1>Verify network, bluetooth, audio and video drivers</h1>
+ <a href="javascript:next_image();"><img id="desktop_img" src="images/404.png"></a>
+ </ul>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head>
+ <style>
+  body { background-color:darkblue; color: lightgrey; }
+  h1 { font-size: 3em; text-align: center; }
+  li { font-size: 2.5em; padding-top: 15px; }
+  table { background-color:black; color: lightgrey; border: 1px solid green; width: 80%; }
+  tr { font-size: 1.25em; font-family: monospace; }
+  td { padding-left: 10px; padding-bottom: 5px; padding-bottom: 5px; }
+  th { padding-left: 10px; padding-bottom: 5px; padding-bottom: 5px; text-align: left; color: cyan; width: 99%; }
+  .highlight { background-color: yellow; color: black; }
+ </style>
+</head>
+<body>
+ <h1>Create live Linux Mint thumb drive</h1>
+ <ul>
+   <li>Insert new thumb drive (2GB minimum).</li>
+   <li>Identify new thumb drive.
+     <table>
+       <tr><td>$</td><th><b>sudo blkid | sort</th></tr>
+       <tr><td>&nbsp</td>
+         <td>
+         /dev/loop0: LABEL="casper-rw" UUID="465846a4-85a0-41d9-8da7-3b4b72937eb0" TYPE="ext2"<br>
+         /dev/loop1: TYPE="squashfs"<br>
+         /dev/sda1: UUID="E25B-4DC5" TYPE="vfat" PARTLABEL="EFI system partition" PARTUUID="e7052883-e73d-49c8-80c9-cf0c57154065"<br>
+         /dev/sda2: PARTLABEL="Microsoft reserved partition" PARTUUID="52bbfe12-c87f-47c9-8032-3bd689bb10a7"<br>
+         /dev/sda3: LABEL="Windows" UUID="86F2F829F2F81F5D" TYPE="ntfs" PARTLABEL="Basic data partition" PARTUUID="c350e312-eca2-42c1-ac7e-2b8671d38ff7"<br>
+         /dev/sda4: LABEL="Windows RE tools" UUID="F41E48421E47FBDC" TYPE="ntfs" PARTLABEL="Basic data partition" PARTUUID="5d1c3206-a4b1-4c26-9cf3-572b05e7d73e"<br>
+         /dev/sda5: LABEL="RECOVERY" UUID="7A6296B36296741B" TYPE="ntfs" PARTLABEL="Basic data partition" PARTUUID="60d43d24-4e39-4292-879e-7ea9f0399366"<br>
+         /dev/sdb1: LABEL="LIVE" UUID="2701-C05E" TYPE="vfat" PARTUUID="d7e47f1d-01"<br>
+         /dev/sdb2: LABEL="home-rw" UUID="50627404-ffd9-4221-a531-1747f46cfaef" TYPE="ext2" PARTUUID="d7e47f1d-02"<br>
+         <span class="highlight">/dev/sdc</span>1: LABEL="KINGSTON_8G" UUID="539B-361F" TYPE="vfat" PARTUUID="5947d76c-01"
+         </td>
+       </tr>
+     </table>
+  </li>
+  <li>Burn ISO to thumb drive.
+     <table>
+       <tr><td>$</td><th><b>sudo dd of=<span class="highlight">/dev/sdc</span> bs=262144 if=linuxmint-18-cinnamon-64bit.iso</th></tr>
+       <tr><td>&nbsp</td>
+         <td>
+         6477+0 records in<br>
+         6477+0 records out<br>
+         1697906688 bytes (1.7 GB, 1.6 GiB) copied, 414.358 s, 4.1 MB/s
+         </td>
+       </tr>
+     </table>
+  </li>
+ </ul>
+</body>
+</html>

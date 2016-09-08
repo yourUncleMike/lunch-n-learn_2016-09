@@ -1,0 +1,24 @@
+<html>
+<head>
+ <style>
+  body { background-color:darkblue; color: lightgrey; }
+  h1 { font-size: 3em; text-align: center; }
+  li { font-size: 2.5em; }
+ </style>
+</head>
+<body>
+ <h1>Two kinds of persistence</h1>
+ <ul>
+  <li><b>root</b> persistence (casper-rw)</li>
+   <ul>
+    <li>Preserves OS changes</li>
+    <li>Must be file, not partition (<a target="_extern" href="https://forums.linuxmint.com/viewtopic.php?t=218783">broken since Mint 17.3</a>)<br /><br /></li>
+   </ul>
+  <li><b>home</b> persistence (home-rw)</li>
+   <ul>
+    <li>Preserves user file changes</li>
+    <li>Partition preferred (faster build and access times)<br /><br /></li>
+   </ul>
+ </ul>
+</body>
+</html>
