@@ -7,12 +7,9 @@
   .removed { color:blue; }
   .changed { color:orange; }
  </style>
- <script>
-  function init() { location.href="#mint"; }
- </script>
  <link rel="stylesheet" href="css/tooltip.css">
 </head>
-<body> <!-- onLoad="init();" -->
+<body onLoad="javascript:self.focus();">
 <pre>
 <font class="added">set <span class="tooltip"><span class="tooltiptext"><b>timeout</b>: Seconds to wait for keyboard input before booting the default menu entry.</span>timeout</span>=30</font>
 <font class="added">set <span class="tooltip"><span class="tooltiptext"><b>pager=1</b>: Pause output after each screenful and wait for keyboard input.</span>pager=1</span></font>
@@ -47,7 +44,7 @@ fi
 
 set menu_color_normal=white/black
 set menu_color_highlight=black/light-gray
-<a id="mint" name="mint">
+<a name="mint">
 menuentry "Linux Mint 18 Cinnamon 64-bit" {
 	<font class="added">savedefault</font>
 	set gfxpayload=keep
