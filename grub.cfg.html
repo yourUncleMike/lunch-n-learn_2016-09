@@ -1,15 +1,19 @@
 <html>
 <head>
  <style>
-  body { color:white; background-color: black; }
+  body  { color:white; background-color: black; }
+  input { color:white; background-color: black; font-size: 1em; font-family: monospace; border: none; }
   pre  { font-size: 1.5em; }
   .added { color:cyan; }
   .removed { color:blue; }
   .changed { color:orange; }
  </style>
  <link rel="stylesheet" href="css/tooltip.css">
+ <script>
+  function init() { document.getElementById("menuentries").focus(); }
+ </script>
 </head>
-<body onLoad="javascript:self.focus();">
+<body onLoad="javascript:init();">
 <pre>
 <font class="added">set <span class="tooltip"><span class="tooltiptext"><b>timeout</b>: Seconds to wait for keyboard input before booting the default menu entry.</span>timeout</span>=30</font>
 <font class="added">set <span class="tooltip"><span class="tooltiptext"><b>pager=1</b>: Pause output after each screenful and wait for keyboard input.</span>pager=1</span></font>
@@ -54,7 +58,7 @@ menuentry "Linux Mint 18 Cinnamon 64-bit" {
 menuentry "Linux Mint 18 Cinnamon (<font class="changed">rescue</font>)" {
 	linux	/casper/vmlinuz  file=/cdrom/preseed/linuxmint.seed boot=casper xforcevesa iso-scan/filename=${iso_path} ramdisk_size=1048576 root=/dev/ram rw <font class="changed">rescue</font> noacpi nosplash irqpoll <font class="added">noprompt</font> --
 	initrd	/casper/initrd.lz
-}<font class="added">
+<input size="1" type="text" id="menuentries" value="}" readonly><font class="added">
 menuentry "Windows" {
 	insmod part_gpt
 	insmod fat
