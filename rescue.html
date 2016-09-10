@@ -1,0 +1,152 @@
+<html>
+<head>
+ <style>
+  body { background-color:darkblue; color: lightgrey; }
+  h1 { font-size: 3em; text-align: center; }
+  li { font-size: 2.5em; padding-top: 15px; }
+  table { background-color:black; color: lightgrey; border: 1px solid green; width: 80%; }
+  tr { font-size: 1.25em; font-family: monospace; }
+  td { padding-left: 10px; padding-bottom: 5px; padding-bottom: 5px; }
+  th { padding-left: 10px; padding-bottom: 5px; padding-bottom: 5px; text-align: left; color: cyan; width: 99%; }
+  .highlight { background-color: yellow; color: black; }
+ </style>
+</head>
+<body onLoad="javascript:self.focus();">
+ <h1>Linux Mint 18 Cinnamon (rescue)</h1>
+ <ul>
+
+  <li>Hint:&nbsp;&nbsp;Press [Enter]
+   <table>
+    <tr>
+     <td colspan="2">
+<pre>
+Welcome to rescue mode! After logging in, type "journalctl -xb" to view
+system logs, "systemctl reboot" to reboot, "systemctl default" or ^D to
+boot into default mode.
+Press Enter for maintenance
+(or press Control-D to continue):
+</pre>
+     </td>
+   </table><br />
+  </li>
+
+  <li>Check runlevel<br>
+   <table>
+    <tr><td>#</td><th>runlevel</th></tr>
+    <tr><td>&nbsp;</td><td>N 1</td></tr>
+   </table><br />
+  </li>
+
+  <li>Review mounted filesystems ... especially /cdrom<br>
+   <table>
+    <tr><td>#</td><th>df</th></tr>
+    <tr>
+     <td>&nbsp;</td>
+     <td>
+<pre>
+Filesystem     1K-blocks    Used Available Use% Mounted on
+udev             6081128       0   6081128   0% /dev
+tmpfs            1219112    9368   1209744   1% /run
+/dev/sdb1        6278152 5855248    422904  94% /cdrom
+/dev/loop0       1608832 1608832         0 100% /rofs
+/cow             6095540   28980   6066560   1% /
+tmpfs            6095540       0   6095540   0% /dev/shm
+tmpfs               5120       4      5116   1% /run/lock
+tmpfs            6095540       0   6095540   0% /sys/fs/cgroup
+tmpfs            6095540       0   6095540   0% /tmp
+</pre>
+     </td>
+    </tr>
+    <tr><td>#</td><th>mount | grep cdrom</th></tr>
+    <tr><td>&nbsp;</td><td><pre>/dev/sdb1 on /<font color="red">cdrom</font> type vfat (ro,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)</td></tr>
+   </table><br />
+  </li>
+
+  <li>Check home (home-rw) persistence.
+   <table>
+    <tr><td>#</td><th>e2fsck -v -y /dev/sdb2</th></tr>
+    <tr>
+     <td>&nbsp</td>
+     <td>
+<pre>
+e2fsck 1.42.13 (17-May-2015)
+home-rw has been mounted 16 times without being checked, check forced.
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information<br>
+        4562 inodes used (0.13%, out of 3407872)
+         777 non-contiguous files (17.0%)
+           8 non-contiguous directories (0.2%)
+             # of inodes with ind/dind/tind blocks: 608/70/0
+     1365907 blocks used (10.04%, out of 13606912)
+           0 bad blocks
+           1 large file<br>
+        3354 regular files
+        1195 directories
+           0 character device files
+           0 block device files
+           0 fifos
+           0 links
+           4 symbolic links (4 fast symbolic links)
+           0 sockets
+------------
+        4553 files
+</pre>
+     </td>
+    </tr>
+   </table><br />
+  </li>
+
+  <li>Check and repair root (casper-rw) persistence.
+   <table>
+    <tr><td>#</td><th>mount -o remount,rw /cdrom</th></tr>
+    <tr><td>#</td><th>e2fsck -v -y /cdrom/casper-rw</th></tr>
+    <tr><td>&nbsp</td>
+     <td>
+<pre>
+e2fsck 1.42.13 (17-May-2015)
+casper-rw was not cleanly unmounted, check forced.
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+Free blocks count wrong (730494, counted=730413).
+Fix? yes<br>
+Free inodes count wrong (237949, counted=237944).
+Fix? yes<br>
+casper-rw: ***** FILE SYSTEM WAS MODIFIED *****<br>
+       24200 inodes used (9.23%, out of 262144)
+        1263 non-contiguous files (5.2%)
+          29 non-contiguous directories (0.1%)
+             # of inodes with ind/dind/tind blocks: 1237/28/0
+      317907 blocks used (30.33%, out of 1048320)
+           0 bad blocks
+           1 large file<br>
+       19317 regular files
+        1510 directories
+         134 character device files
+           0 block device files
+           0 fifos
+           0 links
+        3230 symbolic links (3196 fast symbolic links)
+           0 sockets
+------------
+       24191 files
+</pre>
+     </td>
+    </tr>
+   </table><br />
+  </li>
+
+  <li>Back to our regularly scheduled programming ...
+   <table>
+    <tr><td>#</td><th>systemctl reboot</th></tr>
+   </table><br />
+  </li>
+
+ </ul>
+</body>
+</html>

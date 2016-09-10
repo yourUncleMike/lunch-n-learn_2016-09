@@ -82,6 +82,7 @@ menuentry "Check the integrity of the medium" {
 	initrd	/casper/initrd.lz
 }
 menuentry "EXIT" {
+	savedefault
 	exit
 }
 EOF
