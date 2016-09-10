@@ -20,6 +20,12 @@
     <tr>
      <td colspan="2">
 <pre>
+:
+[  <font color="lightgreen">OK</font>  ] Reached target Rescue Mode.
+         Started Update UTMP about System Runlevel Changes...
+[  <font color="lightgreen">OK</font>  ] Started Trigger resolvconf update for networkd DNS.
+[  <font color="lightgreen">OK</font>  ] Started Update UTMP about System Runlevel Changes.
+[  <font color="lightgreen">OK</font>  ] Started Load/Save RF Kill Switch Status.
 Welcome to rescue mode! After logging in, type "journalctl -xb" to view
 system logs, "systemctl reboot" to reboot, "systemctl default" or ^D to
 boot into default mode.
@@ -27,14 +33,14 @@ Press Enter for maintenance
 (or press Control-D to continue):
 </pre>
      </td>
-   </table><br />
+   </table>
   </li>
 
   <li>Check runlevel<br>
    <table>
     <tr><td>#</td><th>runlevel</th></tr>
     <tr><td>&nbsp;</td><td>N 1</td></tr>
-   </table><br />
+   </table>
   </li>
 
   <li>Review mounted filesystems ... especially /cdrom<br>
@@ -57,9 +63,9 @@ tmpfs            6095540       0   6095540   0% /tmp
 </pre>
      </td>
     </tr>
-    <tr><td>#</td><th>mount | grep cdrom</th></tr>
-    <tr><td>&nbsp;</td><td><pre>/dev/sdb1 on /<font color="red">cdrom</font> type vfat (ro,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)</td></tr>
-   </table><br />
+    <tr><td>#</td><th>mount -t vfat</th></tr>
+    <tr><td>&nbsp;</td><td><pre>/dev/sdb1 on /cdrom type vfat (ro,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=...)</td></tr>
+   </table>
   </li>
 
   <li>Check home (home-rw) persistence.
@@ -96,7 +102,7 @@ Pass 5: Checking group summary information<br>
 </pre>
      </td>
     </tr>
-   </table><br />
+   </table>
   </li>
 
   <li>Check and repair root (casper-rw) persistence.
@@ -138,13 +144,13 @@ casper-rw: ***** FILE SYSTEM WAS MODIFIED *****<br>
 </pre>
      </td>
     </tr>
-   </table><br />
+   </table>
   </li>
 
   <li>Back to our regularly scheduled programming ...
    <table>
     <tr><td>#</td><th>systemctl reboot</th></tr>
-   </table><br />
+   </table>
   </li>
 
  </ul>
