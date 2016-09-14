@@ -22,10 +22,10 @@ if [ -s $<span class="tooltip"><span class="tooltiptext"><b>prefix</b>: The loca
   <span class="tooltip"><span class="tooltiptext"><b>load_env</b>: Load variables from the environment block file, /boot/grub/grubenv.</span>load_env</span>
 fi
 
-set default="${saved_entry}"
+set <span class="tooltip"><span class="tooltiptext"><b>default</b>: Identifies a menu entry that should be selected by default.</span>default</span>="${saved_entry}"
 if [ "${prev_saved_entry}" ]; then
   set saved_entry="${prev_saved_entry}"
-  save_env saved_entry
+  <span class="tooltip"><span class="tooltiptext"><b>save_env</b>: Save specified variable(s) to the environment block.</span>save_env</span> saved_entry
   set prev_saved_entry=
   save_env prev_saved_entry
   set boot_once=true
@@ -40,7 +40,7 @@ function savedefault {
 </font>
 if loadfont /boot/grub/font.pf2 ; then
 	set gfxmode=<font class="added">1024x768,</font>auto
-	insmod efi_gop
+	<span class="tooltip"><span class="tooltiptext"><b>insmod</b>: Load specifed dynamic GRUB module.</span>insmod</span> efi_gop
 	insmod efi_uga
 	insmod gfxterm
 	terminal_output gfxterm
@@ -52,8 +52,8 @@ set menu_color_highlight=black/light-gray
 menuentry "Linux Mint 18 Cinnamon 64-bit" {
 	<font class="added">savedefault</font>
 	set gfxpayload=keep
-	linux	/casper/vmlinuz  file=/cdrom/preseed/linuxmint.seed boot=casper iso-scan/filename=${iso_path} quiet splash <font class="added"><span class="tooltip"><span class="tooltiptext"><b>noprompt</b>:<br>Do not prompt to eject USB<br>on shutdown or reboot.</span>noprompt</span> hostname=tardis</font> -- <font class="added">persistent</font>
-	initrd	/casper/initrd.lz
+	<span class="tooltip"><span class="tooltiptext"><b>linux</b>: Load specified Linux kernel file,<br>&nbsp;and pass rest of line verbatim as the<br>&nbsp;kernel command line.</span>linux</span>	/casper/vmlinuz  file=/cdrom/preseed/linuxmint.seed boot=casper iso-scan/filename=${iso_path} quiet splash <font class="added"><span class="tooltip"><span class="tooltiptext"><b>noprompt</b>:<br>Do not prompt to eject USB<br>on shutdown or reboot.</span>noprompt</span> hostname=tardis</font> -- <font class="added">persistent</font>
+	<span class="tooltip"><span class="tooltiptext"><b>initrd</b>: Load specified file as the initial RAM disk<br>&nbsp;image for a Linux kernel.</span>initrd</span>	/casper/initrd.lz
 }
 menuentry "Linux Mint 18 Cinnamon (<font class="changed">rescue</font>)" {
 	linux	/casper/vmlinuz  file=/cdrom/preseed/linuxmint.seed boot=casper xforcevesa iso-scan/filename=${iso_path} ramdisk_size=1048576 root=/dev/ram rw <font class="changed">rescue</font> noacpi nosplash irqpoll <font class="added">noprompt</font> --
@@ -65,9 +65,9 @@ menuentry "Windows" {
 	insmod part_msdos
 	insmod ntfs
 	if f=/efi/Microsoft/Boot/bootmgfw.efi ; search --file --no-floppy --set=root $f ; then
-		chainloader $f
+		<span class="tooltip"><span class="tooltiptext"><b>chainloader</b>: Load specified file as a chain-loader.</span>chainloader</span> $f
 	elif f=/bootmgr ; search --file --no-floppy --set=root $f ; then
-		chainloader +1
+		chainloader <span class="tooltip"><span class="tooltiptext"><b>+1</b>: Grab 1st sector of current partition.</span>+1</span>
 	else
 		echo Windows not found.  Exiting GRUB ...
 		sleep 5
