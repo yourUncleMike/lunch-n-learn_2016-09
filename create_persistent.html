@@ -3,7 +3,7 @@
  <style>
   body { background-color:darkblue; color: lightgrey; }
   h1 { font-size: 3em; text-align: center; }
-  li { font-size: 2.5em; padding-top: 15px; }
+  li { font-size: 2.5em; padding-top: 15px; padding-bottom: 15px; }
   table { background-color:black; color: lightgrey; border: 1px solid green; width: 80%; }
   tr { font-size: 1.25em; font-family: monospace; }
   td { padding-left: 10px; padding-bottom: 5px; padding-bottom: 5px; }
@@ -14,18 +14,28 @@
 <body onLoad="javascript:self.focus();">
  <h1>Create live Linux Mint thumb drive<br>(with persistence)</h1>
  <ul>
-   <li>Insert new thumb drive (16GB minimum, USB3 recommended).</li>
-   <li>Identify new thumb drive.
-     <table>
-       <tr><td>$</td><th>sudo su - root</th></tr>
-       <tr><td>#</td><th>blkid | sort</th></tr>
-       <tr><td>&nbsp</td>
-         <td>
-         :<br>
-         <span class="highlight">/dev/sdc</span>1: LABEL="SDCZ15_16G" UUID="910A-E96D" TYPE="vfat" PARTUUID="5efdcfd1-01"
-         </td>
-       </tr>
-     </table>
+  <li>Insert new thumb drive (different than live thumb drive)</li>
+  <ul>
+   <li>16GB minimum</li>
+   <li>USB3 recommended<br>&nbsp;</li>
+  </ul>
+  <li>Identify new thumb drive.</li>
+   <ul>
+    <li>
+     IMPORTANT: &nbsp;Ensure that the USB variable is defined <br>correctly in persistence.sh!
+    </li>
+   </ul>
+   <table>
+    <tr><td>$</td><th>sudo su - root</th></tr>
+    <tr><td>#</td><th>blkid | sort</th></tr>
+    <tr><td>&nbsp</td>
+     <td>
+      :<br>
+      <span class="highlight">/dev/sdc</span>1: UUID="C981-8127" TYPE="vfat"
+     </td>
+    </tr>
+   </table>
+   &nbsp;
   </li>
   <li>Create live thumb drive with persistence.
      <table>
@@ -34,34 +44,37 @@
        <tr><td>&nbsp</td>
          <td>
 <pre>
-2016-09-09 17:53:58
+2016-09-15 21:36:30
 PASS: Got to be root.
 
-2016-09-09 17:53:58
+2016-09-15 21:36:30
 PASS: Ensure LIVE mountpoint (/media/LIVE) is vacant.
 
-2016-09-09 17:53:58
+2016-09-15 21:36:30
 PASS: Ensure ISO mountpoint (/media/ISO) is vacant.
 
-2016-09-09 17:53:58
+2016-09-15 21:36:30
+PASS: Unmounting /dev/sdc1 (/media/mint/C981-8127)
+
+2016-09-15 21:36:30
 PASS: Clear first 16MB on /dev/sdc.
       16+0 records in
       16+0 records out
-      16777216 bytes (17 MB, 16 MiB) copied, 0.765456 s, 21.9 MB/s
+      16777216 bytes (17 MB, 16 MiB) copied, 0.917909 s, 18.3 MB/s
 
-2016-09-09 17:54:09
+2016-09-15 21:36:41
 PASS: Create msdos disk label for /dev/sdc.
 
-2016-09-09 17:54:19
+2016-09-15 21:36:51
 PASS: Allocate bootable LIVE partition.
 
-2016-09-09 17:54:30
+2016-09-15 21:37:02
 PASS: Allocate home persistence (home-rw) partition.
 
-2016-09-09 17:54:40
+2016-09-15 21:37:12
 PASS: Format LIVE partition as FAT32.
       mkfs.fat 3.0.28 (2015-05-16)
-      /dev/sdc1 has 64 heads and 32 sectors per track,
+      /dev/sdc1 has 255 heads and 63 sectors per track,
       hidden sectors 0x0800;
       logical sector size is 512,
       using 0xf8 media descriptor, with 12580864 sectors;
@@ -69,85 +82,86 @@ PASS: Format LIVE partition as FAT32.
       filesystem has 2 32-bit FATs and 8 sectors per cluster.
       FAT size is 12263 sectors, and provides 1569538 clusters.
       There are 32 reserved sectors.
-      Volume ID is 7605f1a0, volume label LIVE       .
+      Volume ID is 48883e7d, volume label LIVE       .
 
-2016-09-09 17:54:52
+2016-09-15 21:37:23
 PASS: Create LIVE and ISO mountpoints.
 
-2016-09-09 17:54:52
+2016-09-15 21:37:23
 PASS: Mount LIVE partition.
 
-2016-09-09 17:54:52
+2016-09-15 21:37:23
 PASS: Allocate root persistence (casper-rw) file.
       4095+0 records in
       4095+0 records out
-      4293918720 bytes (4.3 GB, 4.0 GiB) copied, 582.5 s, 7.4 MB/s
+      4293918720 bytes (4.3 GB, 4.0 GiB) copied, 137.409 s, 31.2 MB/s
 
-2016-09-09 18:04:35
+2016-09-15 21:39:40
 PASS: Format root persistence file as EXT2.
       mke2fs 1.42.13 (17-May-2015)
       Creating filesystem with 1048320 4k blocks and 262144 inodes
-      Filesystem UUID: 1d676b27-27e1-4c7a-836c-5761aefa1360
+      Filesystem UUID: 981b9148-e79b-447c-8318-024e6938e16e
       Superblock backups stored on blocks: 
       	32768, 98304, 163840, 229376, 294912, 819200, 884736
       
-      Allocating group tables:  done
-      Writing inode tables:  done
-      Writing superblocks and filesystem accounting information: done
+      Allocating group tables: done                            
+      Writing inode tables: done                            
+      Writing superblocks and filesystem accounting information: done 
 
-2016-09-09 18:10:35
+2016-09-15 21:41:57
 PASS: Set max mount count for root persistence.
       tune2fs 1.42.13 (17-May-2015)
       Setting maximal mount count to 1
 
-2016-09-09 18:10:35
+2016-09-15 21:41:57
 PASS: Format home persistence partition as EXT2.
       mke2fs 1.42.13 (17-May-2015)
-      Creating filesystem with 2335488 4k blocks and 584064 inodes
-      Filesystem UUID: 7fe1ef2d-a5e0-4e09-9c6a-0a5d8ea527f5
+      Creating filesystem with 28753920 4k blocks and 7192576 inodes
+      Filesystem UUID: ad629cd5-c878-41be-90eb-b96c07a23f9b
       Superblock backups stored on blocks: 
-      	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+      	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+      	4096000, 7962624, 11239424, 20480000, 23887872
       
-      Allocating group tables: done
-      Writing inode tables: done
-      Writing superblocks and filesystem accounting information: done
+      Allocating group tables: done                            
+      Writing inode tables: done                            
+      Writing superblocks and filesystem accounting information: done   
 
-2016-09-09 18:11:47
+2016-09-15 21:43:33
 PASS: Set max mount count for home persistence.
       tune2fs 1.42.13 (17-May-2015)
       Setting maximal mount count to 1
 
-2016-09-09 18:11:47
+2016-09-15 21:43:33
 PASS: Mount ISO image (linuxmint-18-cinnamon-64bit.iso).
       mount: /dev/loop1 is write-protected, mounting read-only
 
-2016-09-09 18:11:47
+2016-09-15 21:43:35
 PASS: Copy ISO files to LIVE partition.
 
-2016-09-09 18:12:02
+2016-09-15 21:43:50
 PASS: Install GRUB.
       grub-probe: error: failed to get canonical path of `/cow'.
       Installing for i386-pc platform.
       Installation finished. No error reported.
 
-2016-09-09 18:16:53
+2016-09-15 21:45:33
 PASS: Backup stock GRUB configuration.
       '/media/LIVE/boot/grub/grub.cfg' -> '/media/LIVE/boot/grub/grub.cfg.stock'
 
-2016-09-09 18:16:53
+2016-09-15 21:45:33
 PASS: Customize GRUB configuration.
       GRUB configuration goes here.
 
-2016-09-09 18:16:53
+2016-09-15 21:45:33
 PASS: Unmount ISO image (linuxmint-18-cinnamon-64bit.iso).
 
-2016-09-09 18:16:53
+2016-09-15 21:45:33
 PASS: Remove ISO mountpoint (/media/ISO).
 
-2016-09-09 18:16:53
+2016-09-15 21:45:33
 PASS: Unmount LIVE partition.
 
-2016-09-09 18:16:54
+2016-09-15 21:45:34
 PASS: Remove LIVE mountpoint (/media/LIVE).
 </pre>
          </td>
