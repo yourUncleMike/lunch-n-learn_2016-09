@@ -30,9 +30,7 @@ printf '\n'
 date +"%F %T"
 printf "....: %s\r" "$1"
 shift
-output="$($* 2>&1)"
-status=$?
-if [ $status -eq 0 ]
+if output="$($* 2>&1)"
 then
   printf "PASS\n"
 else
@@ -54,7 +52,7 @@ df | awk '/^('"$USBs"')/ && $6 != "/cdrom" {print $6}' \
 
 check_singleuser()
 {
-  test "$(runlevel)" == 'N 1'
+test "$(runlevel)" == 'N 1'
 }
 
 passfail "Got to be root." \
@@ -63,29 +61,25 @@ passfail "Got to be root." \
 passfail "Got to be at single-user." \
   check_singleuser
 
-passfail "Ensure LIVE2 mountpoint (/media/LIVE2) is vacant." \
-  test ! -d /media/LIVE2
-
-passfail "Ensure CASPER1 mountpoint (/media/CASPER1) is vacant." \
-  test ! -d /media/CASPER1
-
-passfail "Ensure CASPER2 mountpoint (/media/CASPER2) is vacant." \
-  test ! -d /media/CASPER2
-
-passfail "Ensure HOME2 mountpoint (/media/HOME2) is vacant." \
-  test ! -d /media/HOME2
+for dir in CASPER1 HOME1 CASPER2 HOME2 LIVE2
+do
+  passfail "Ensure $dir mountpoint (/media/$dir) is vacant." \
+    test ! -d /media/$dir
+  passfail "Create $dir mountpoint." \
+    mkdir /media/$dir
+done
 
 unmount_USB_partitions $USB1 $USB2
 
 passfail "Clear first 16MB on ${USB2}." \
   dd if=/dev/zero of=${USB2} bs=1M count=16  # This avoids grub-install error later on
 
-  sleep 10
+  sync ; sleep 10
 
 passfail "Create msdos disk label for ${USB2}." \
   parted -s ${USB2} mklabel msdos
 
-  sleep 10
+  sync ; sleep 10
 
 passfail "Allocate bootable LIVE2 partition." \
   parted -s ${USB2} unit s mkpart primary fat32 2048 $LIVE_LAST_SECT set 1 boot on
@@ -96,12 +90,12 @@ passfail "Allocate bootable LIVE2 partition." \
   let start=(start+align-1)/align*align
   let end=(end+1)/align*align-1
 
-  sleep 10
+  sync ; sleep 10
 
 passfail "Allocate HOME2 persistence (${HOME_LABEL}) partition." \
-  parted -s ${USB2} unit s mkpart primary ext2 $start $end
+  parted -s ${USB2} unit s mkpart primary ext4 $start $end
 
-  sleep 10
+  sync ; sleep 10
 
 passfail "Format LIVE2 partition as FAT32." \
   mkdosfs -F32 -v -n "LIVE" ${USB2}1
@@ -109,12 +103,9 @@ passfail "Format LIVE2 partition as FAT32." \
 passfail "Format HOME2 persistence partition as EXT4." \
   mkfs.ext4 -m 0 -O '^has_journal' -L ${HOME_LABEL} ${USB2}2
 
-  sleep 10
+  sync ; sleep 10
 
 unmount_USB_partitions $USB2
-
-passfail "Create LIVE2, CASPER1, CASPER2, HOME1, and HOME2 mountpoints." \
-  mkdir /media/LIVE2 /media/CASPER1 /media/CASPER2 /media/HOME1 /media/HOME2
 
 passfail "Mount CASPER1 persistence partition." \
   mount -o ro /cdrom/casper-rw /media/CASPER1
@@ -149,7 +140,7 @@ passwarn "Clone home-rw files." \
 passfail "Install GRUB." \
   grub-install --no-floppy --root-directory=/media/LIVE2 ${USB2}
 
-for dir in LIVE2 CASPER1 CASPER2 HOME1 HOME2
+for dir in CASPER1 HOME1 CASPER2 HOME2 LIVE2
 do
   passwarn "Unmount $dir partition." \
     umount /media/$dir
